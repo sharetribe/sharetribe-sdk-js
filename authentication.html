@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="styles.css?t=6eea839d">
     <script src="assets/script.js?t=93f1a66c"></script>
     <script src="scripts.js?t=bafb4b9e"></script>
-    <script src="sharetribe-flex-sdk-web.js?t=fc6befe1"></script>
+    <script src="sharetribe-flex-sdk-web.js?t=ea135566"></script>
     <title>Authentication - Sharetribe Flex SDK for JavaScript</title>
     <meta name="viewport" content="width=device-width">
     <script>if (false || window.location.hostname.indexOf("sharetribe.github.io") === window.location.hostname.length - 20) {
@@ -100,22 +100,16 @@ this case, you should configure the SDK to use <a href="token-store.html#memory-
 store</a>.</p>
 <h2 id="determine-if-user-is-logged-in">Determine if user is logged in</h2>
 <p><strong><code>sdk.authInfo() : Promise(Object)</code></strong></p>
-<p>Returns a Promise with an Object as a value. The object may contain a
-<code>grantType</code> field with either <code>&apos;client_credentials&apos;</code>,
-<code>&apos;refresh_token&apos;</code> as a value. The different values have the following
-meanings:</p>
+<p>Returns a Promise with an Object as a value. The object may contain two fields:</p>
 <ul>
-<li>No grant type: user hasn&apos;t yet authenticated itself (i.e. hasn&apos;t
-done any requests to the API).</li>
-<li>Grant type <code>&apos;client_credentials&apos;</code>: user has authenticated as an
-anonymous user (i.e. has not logged in)</li>
-<li>Grant type <code>&apos;refresh_token&apos;</code>: user has logged in.</li>
+<li><code>scopes</code>: an array containing the scopes associated with the currently stored token</li>
+<li><code>isAnonymous</code>: a boolean denoting if the currently stored token only allows public read access</li>
 </ul>
-<p>To determine if the user is logged in, check if <code>grantType</code> equals
-<code>&apos;refresh_token&apos;</code>.</p>
+<p>To determine if the user is logged in, check if <code>isAnonymous</code> equals
+<code>false</code>.</p>
 <p><strong>Example:</strong></p>
 <pre><code class="lang-js">sdk.authInfo().then(<span class="hljs-function"><span class="hljs-params">authInfo</span> =&gt;</span> {
-  <span class="pl-k">if</span> (authInfo &amp;&amp; authInfo.grantType === <span class="pl-s">&apos;refresh_token&apos;</span>) {
+  <span class="pl-k">if</span> (authInfo &amp;&amp; authInfo.isAnonymous === <span class="pl-c1">false</span>) {
     <span class="pl-c1">console</span>.log(<span class="pl-s">&quot;User is logged in.&quot;</span>);
   } <span class="pl-k">else</span> {
     <span class="pl-c1">console</span>.log(<span class="pl-s">&quot;User is NOT logged in.&quot;</span>)
@@ -133,7 +127,7 @@ example, to know the name of the logged in user, you need to call
 <p>Here&apos;s a full example how to log user in and out and determine the
 current authentication status.</p>
 <p><strong>Example:</strong></p>
-<pre><code class="lang-js"><span class="pl-k">const</span> isLoggedIn = <span class="hljs-function"><span class="hljs-params">authInfo</span> =&gt;</span> authInfo &amp;&amp; authInfo.grantType === <span class="pl-s">&apos;refresh_token&apos;</span>;
+<pre><code class="lang-js"><span class="pl-k">const</span> isLoggedIn = <span class="hljs-function"><span class="hljs-params">authInfo</span> =&gt;</span> authInfo &amp;&amp; authInfo.isAnonymous === <span class="pl-c1">false</span>;
 
 sdk.authInfo().then(<span class="hljs-function"><span class="hljs-params">authInfo</span> =&gt;</span> {
     <span class="pl-c1">console</span>.log(<span class="pl-s">`Logged in: <span class="hljs-subst">${isLoggedIn(authInfo)}</span>`</span>)
