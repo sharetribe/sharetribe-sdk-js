@@ -62,10 +62,32 @@
         "slug": "try-it-in-browser"
       },
       {
-        "title": "Try it in command-line!",
-        "source": "docs/try-it-in-command-line.md",
-        "url": "try-it-in-command-line.html",
-        "slug": "try-it-in-command-line"
+        "title": "Try it in the API Playground!",
+        "source": "docs/try-it-in-the-playground.md",
+        "url": "try-it-in-the-playground.html",
+        "slug": "try-it-in-the-playground",
+        "headings": [
+          {
+            "title": "Making API Requests",
+            "depth": 2,
+            "id": "making-api-requests"
+          },
+          {
+            "title": "Authenticated access",
+            "depth": 2,
+            "id": "authenticated-access"
+          },
+          {
+            "title": "Viewing Marketplace API reference documentation",
+            "depth": 2,
+            "id": "viewing-marketplace-api-reference-documentation"
+          },
+          {
+            "title": "Scripting support",
+            "depth": 2,
+            "id": "scripting-support"
+          }
+        ]
       },
       {
         "title": "Getting started",
@@ -313,11 +335,33 @@
       "pageTitle": "Try it in browser!",
       "slug": "try-it-in-browser"
     },
-    "try-it-in-command-line.html": {
-      "source": "docs/try-it-in-command-line.md",
-      "title": "Try it in command-line! - Sharetribe Flex SDK for JavaScript",
-      "pageTitle": "Try it in command-line!",
-      "slug": "try-it-in-command-line"
+    "try-it-in-the-playground.html": {
+      "source": "docs/try-it-in-the-playground.md",
+      "title": "Try it in the API Playground! - Sharetribe Flex SDK for JavaScript",
+      "pageTitle": "Try it in the API Playground!",
+      "slug": "try-it-in-the-playground",
+      "headings": [
+        {
+          "title": "Making API Requests",
+          "depth": 2,
+          "id": "making-api-requests"
+        },
+        {
+          "title": "Authenticated access",
+          "depth": 2,
+          "id": "authenticated-access"
+        },
+        {
+          "title": "Viewing Marketplace API reference documentation",
+          "depth": 2,
+          "id": "viewing-marketplace-api-reference-documentation"
+        },
+        {
+          "title": "Scripting support",
+          "depth": 2,
+          "id": "scripting-support"
+        }
+      ]
     },
     "authentication.html": {
       "source": "docs/authentication.md",
@@ -497,7 +541,7 @@
     "README.md": "index.html",
     "docs/features.md": "features.html",
     "docs/try-it-in-browser.md": "try-it-in-browser.html",
-    "docs/try-it-in-command-line.md": "try-it-in-command-line.html",
+    "docs/try-it-in-the-playground.md": "try-it-in-the-playground.html",
     "docs/authentication.md": "authentication.html",
     "docs/calling-the-api.md": "calling-the-api.html",
     "docs/types.md": "types.html",
