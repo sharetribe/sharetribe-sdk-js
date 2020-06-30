@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="styles.css?t=6eea839d">
     <script src="assets/script.js?t=93f1a66c"></script>
     <script src="scripts.js?t=bafb4b9e"></script>
-    <script src="sharetribe-flex-sdk-web.js?t=ccf1f295"></script>
+    <script src="sharetribe-flex-sdk-web.js?t=56cb395d"></script>
     <title>Authentication - Sharetribe Flex SDK for JavaScript</title>
     <meta name="viewport" content="width=device-width">
     <script>if (false || window.location.hostname.indexOf("sharetribe.github.io") === window.location.hostname.length - 20) {
@@ -40,7 +40,9 @@
                       </li>
                       <li class="heading-item -depth-2"><a class="hlink link-determine-if-user-is-logged-in" href="#determine-if-user-is-logged-in">Determine if user is logged in</a>
                       </li>
-                      <li class="heading-item -depth-2"><a class="hlink link-example" href="#example">Example</a>
+                      <li class="heading-item -depth-2"><a class="hlink link-authentication-example" href="#authentication-example">Authentication example</a>
+                      </li>
+                      <li class="heading-item -depth-2"><a class="hlink link-exchange-token" href="#exchange-token">Exchange token</a>
                       </li>
                       <li class="heading-item -depth-2"><a class="hlink link-seeing-occasional-401-errors" href="#seeing-occasional-401-errors">Seeing occasional 401 errors?</a>
                       </li>
@@ -123,7 +125,7 @@ saved locally in the <a href="token-store.html">token store</a>.</p>
 information in addition to the authentication token. If you need, for
 example, to know the name of the logged in user, you need to call
 <code>sdk.current_user.show()</code>, which calls the corresponding API endpoint.</p>
-<h2 id="example">Example</h2>
+<h2 id="authentication-example">Authentication example</h2>
 <p>Here&apos;s a full example how to log user in and out and determine the
 current authentication status.</p>
 <p><strong>Example:</strong></p>
@@ -159,6 +161,29 @@ sdk.authInfo().then(<span class="hljs-function"><span class="hljs-params">authIn
     <span class="pl-c">// An error occurred</span>
     <span class="pl-c1">console</span>.log(<span class="pl-s">`Request failed with status: <span class="hljs-subst">${res.status}</span> <span class="hljs-subst">${res.statusText}</span>`</span>);
   });
+</code></pre>
+<h2 id="exchange-token">Exchange token</h2>
+<p><strong><code>sdk.exchangeToken() : Promise</code></strong></p>
+<p>A valid access token can be exchanged to a trusted token when combined with a client
+secret. A trusted token is required by the Flex APIs for certain requests, for
+example, <a href="https://www.sharetribe.com/docs/background/privileged-transitions/">privileged
+transitions</a>.</p>
+<p>In order to exchange an access token, a valid access token needs to be stored in
+the SDK&apos;s token store. This can be achieved by logging in or by initializing the
+SDK with a token store that holds an access token.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="lang-js"><span class="pl-k">const</span> sdk = sharetribeSdk.createInstance({
+  <span class="hljs-attr">clientId</span>: <span class="pl-s">&apos;a client ID&apos;</span>,
+  <span class="hljs-attr">clientSecret</span>: <span class="pl-s">&apos;a client secret&apos;</span>,
+  <span class="hljs-attr">tokenStore</span>: sharetribeSdk.tokenStore.memoryStore(),
+})
+
+sdk.login({ <span class="hljs-attr">username</span>: <span class="pl-s">&apos;test-user@example.com&apos;</span>, <span class="hljs-attr">password</span>: <span class="pl-s">&apos;test-secret&apos;</span> });
+
+sdk.exchangeToken().then(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> {
+  <span class="pl-c1">console</span>.log(<span class="pl-s">&apos;Trusted token: &apos;</span>, res.data);
+});
+
 </code></pre>
 <h2 id="seeing-occasional-401-errors">Seeing occasional 401 errors?</h2>
 <p>Are you seeing occasional 401 errors in the browser&apos;s Web Console?

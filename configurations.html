@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="styles.css?t=6eea839d">
     <script src="assets/script.js?t=93f1a66c"></script>
     <script src="scripts.js?t=bafb4b9e"></script>
-    <script src="sharetribe-flex-sdk-web.js?t=ccf1f295"></script>
+    <script src="sharetribe-flex-sdk-web.js?t=56cb395d"></script>
     <title>Configurations - Sharetribe Flex SDK for JavaScript</title>
     <meta name="viewport" content="width=device-width">
     <script>if (false || window.location.hostname.indexOf("sharetribe.github.io") === window.location.hostname.length - 20) {
@@ -77,12 +77,17 @@
 
 <span class="pl-k">var</span> sdk = sharetribeSdk.createInstance({
 
-  <span class="pl-c">// The API ClientID (mandatory)</span>
+  <span class="pl-c">// An API application client ID (mandatory)</span>
   clientId: <span class="pl-s">&quot;08ec69f6-d37e-414d-83eb-324e94afddf0&quot;</span>,
+
+  <span class="pl-c">// An API application client secret. Only to be used in a server</span>
+  <span class="pl-c">// environment and not to be exposed to a client/browser.</span>
+  clientSecret: <span class="pl-s">&quot;8af2bf99c380b3a303ab90ae4012c8cd8f69d309&quot;</span>,
 
   <span class="pl-c">// Token store</span>
   <span class="pl-c">//</span>
-  <span class="pl-c">// Token store instance to use. Token store is where the SDK saves the session information.</span>
+  <span class="pl-c">// Token store instance to use. Token store is where the SDK</span>
+  <span class="pl-c">// saves the session information.</span>
   <span class="pl-c">//</span>
   <span class="pl-c">// Built-in token stores:</span>
   <span class="pl-c">//</span>

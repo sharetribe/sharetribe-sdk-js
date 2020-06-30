@@ -114,9 +114,14 @@
                 "id": "determine-if-user-is-logged-in"
               },
               {
-                "title": "Example",
+                "title": "Authentication example",
                 "depth": 2,
-                "id": "example"
+                "id": "authentication-example"
+              },
+              {
+                "title": "Exchange token",
+                "depth": 2,
+                "id": "exchange-token"
               },
               {
                 "title": "Seeing occasional 401 errors?",
@@ -385,9 +390,14 @@
           "id": "determine-if-user-is-logged-in"
         },
         {
-          "title": "Example",
+          "title": "Authentication example",
           "depth": 2,
-          "id": "example"
+          "id": "authentication-example"
+        },
+        {
+          "title": "Exchange token",
+          "depth": 2,
+          "id": "exchange-token"
         },
         {
           "title": "Seeing occasional 401 errors?",
