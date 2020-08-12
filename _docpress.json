@@ -217,6 +217,12 @@
             "slug": "serializing-types-to-json"
           },
           {
+            "title": "Object query parameters",
+            "source": "docs/object-query-parameters.md",
+            "url": "object-query-parameters.html",
+            "slug": "object-query-parameters"
+          },
+          {
             "title": "Token store",
             "source": "docs/token-store.md",
             "url": "token-store.html",
@@ -487,6 +493,12 @@
       "pageTitle": "Serializing types to JSON",
       "slug": "serializing-types-to-json"
     },
+    "object-query-parameters.html": {
+      "source": "docs/object-query-parameters.md",
+      "title": "Object query parameters - Sharetribe Flex SDK for JavaScript",
+      "pageTitle": "Object query parameters",
+      "slug": "object-query-parameters"
+    },
     "token-store.html": {
       "source": "docs/token-store.md",
       "title": "Token store - Sharetribe Flex SDK for JavaScript",
@@ -558,6 +570,7 @@
     "docs/configurations.md": "configurations.html",
     "docs/your-own-types.md": "your-own-types.html",
     "docs/serializing-types-to-json.md": "serializing-types-to-json.html",
+    "docs/object-query-parameters.md": "object-query-parameters.html",
     "docs/token-store.md": "token-store.html",
     "docs/sharing-session-between-client-and-server.md": "sharing-session-between-client-and-server.html",
     "docs/keep-alive.md": "keep-alive.html",
