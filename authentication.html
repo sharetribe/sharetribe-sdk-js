@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="styles.css?t=6eea839d">
     <script src="assets/script.js?t=93f1a66c"></script>
     <script src="scripts.js?t=bafb4b9e"></script>
-    <script src="sharetribe-flex-sdk-web.js?t=018022d3"></script>
+    <script src="sharetribe-flex-sdk-web.js?t=8d7f2e87"></script>
     <title>Authentication - Sharetribe Flex SDK for JavaScript</title>
     <meta name="viewport" content="width=device-width">
     <script>if (false || window.location.hostname.indexOf("sharetribe.github.io") === window.location.hostname.length - 20) {
@@ -37,6 +37,8 @@
                       <li class="heading-item -depth-2"><a class="hlink link-login" href="#login">Login</a>
                       </li>
                       <li class="heading-item -depth-2"><a class="hlink link-logout" href="#logout">Logout</a>
+                      </li>
+                      <li class="heading-item -depth-2"><a class="hlink link-login-with-idp" href="#login-with-idp">Login with IdP</a>
                       </li>
                       <li class="heading-item -depth-2"><a class="hlink link-determine-if-user-is-logged-in" href="#determine-if-user-is-logged-in">Determine if user is logged in</a>
                       </li>
@@ -93,7 +95,7 @@ the user is already logged in or not.</p>
 <p><strong><code>sdk.login({ username: string, password: string }) : Promise</code></strong></p>
 <p>Logs in the user and returns a Promise.</p>
 <p>The session information will be saved to the SDK instance when the
-Promise is resolved. Subsequest requests will be made as the logged in
+Promise is resolved. Subsequent requests will be made as the logged in
 user.</p>
 <h2 id="logout">Logout</h2>
 <p><strong><code>sdk.logout() : Promise</code></strong></p>
@@ -102,6 +104,18 @@ user.</p>
 the session information may not be saved after successful login. In
 this case, you should configure the SDK to use <a href="token-store.html#memory-store">memory-based token
 store</a>.</p>
+<h2 id="login-with-idp">Login with IdP</h2>
+<p><strong><code>sdk.loginWithIdp({ idpId: string, idpClientId: string, idpToken: string }) : Promise</code></strong></p>
+<p>Logs in the user with information from an identity provider (e.g. Facebook) and
+returns a Promise. User can be authenticated if the <code>idpToken</code> can be verified
+and an identity provider account resolved from the token is associated with a
+Flex account or if an email address resolved from the token matches a verified
+email of a Flex account.</p>
+<p><code>sdk.loginWithIdp</code> requires that the SDK instance is initialized with a
+<code>clientSecret</code> attribute.</p>
+<p>The session information will be saved to the SDK instance when the
+Promise is resolved. Subsequent requests will be made as the logged in
+user.</p>
 <h2 id="determine-if-user-is-logged-in">Determine if user is logged in</h2>
 <p><strong><code>sdk.authInfo() : Promise(Object)</code></strong></p>
 <p>Returns a Promise with an Object as a value. The object may contain two fields:</p>
@@ -131,35 +145,46 @@ example, to know the name of the logged in user, you need to call
 <p>Here&apos;s a full example how to log user in and out and determine the
 current authentication status.</p>
 <p><strong>Example:</strong></p>
-<pre><code class="lang-js"><span class="pl-k">const</span> isLoggedIn = <span class="hljs-function"><span class="hljs-params">authInfo</span> =&gt;</span> authInfo &amp;&amp; authInfo.isAnonymous === <span class="pl-c1">false</span>;
+<pre><code class="lang-js"><span class="pl-k">const</span> isLoggedIn = <span class="hljs-function">(<span class="hljs-params">authInfo</span>) =&gt;</span> authInfo &amp;&amp; authInfo.isAnonymous === <span class="pl-c1">false</span>;
 
-sdk.authInfo().then(<span class="hljs-function"><span class="hljs-params">authInfo</span> =&gt;</span> {
-    <span class="pl-c1">console</span>.log(<span class="pl-s">`Logged in: <span class="hljs-subst">${isLoggedIn(authInfo)}</span>`</span>)
+sdk
+  .authInfo()
+  .then(<span class="hljs-function">(<span class="hljs-params">authInfo</span>) =&gt;</span> {
+    <span class="pl-c1">console</span>.log(<span class="pl-s">`Logged in: <span class="hljs-subst">${isLoggedIn(authInfo)}</span>`</span>);
     <span class="pl-c">// prints: &quot;Logged in: false&quot;</span>
 
-    <span class="pl-k">return</span> sdk.login({ <span class="hljs-attr">username</span>: <span class="pl-s">&apos;test-user@example.com&apos;</span>, <span class="hljs-attr">password</span>: <span class="pl-s">&apos;test-secret&apos;</span> });
-  }).then(<span class="hljs-function"><span class="hljs-params">loginRes</span> =&gt;</span> {
+    <span class="pl-k">return</span> sdk.login({
+      <span class="hljs-attr">username</span>: <span class="pl-s">&quot;test-user@example.com&quot;</span>,
+      <span class="hljs-attr">password</span>: <span class="pl-s">&quot;test-secret&quot;</span>,
+    });
+  })
+  .then(<span class="hljs-function">(<span class="hljs-params">loginRes</span>) =&gt;</span> {
     <span class="pl-c1">console</span>.log(<span class="pl-s">&quot;Login successful!&quot;</span>);
 
     <span class="pl-k">return</span> sdk.authInfo();
-  }).then(<span class="hljs-function"><span class="hljs-params">authInfo</span> =&gt;</span> {
+  })
+  .then(<span class="hljs-function">(<span class="hljs-params">authInfo</span>) =&gt;</span> {
     <span class="pl-c1">console</span>.log(<span class="pl-s">`Logged in: <span class="hljs-subst">${isLoggedIn(authInfo)}</span>`</span>);
     <span class="pl-c">// prints: &quot;Logged in: true&quot;</span>
 
     <span class="pl-k">return</span> sdk.currentUser.show();
-  }).then(<span class="hljs-function"><span class="hljs-params">userRes</span> =&gt;</span> {
+  })
+  .then(<span class="hljs-function">(<span class="hljs-params">userRes</span>) =&gt;</span> {
     <span class="pl-k">const</span> profile = userRes.data.data.attributes.profile;
     <span class="pl-c1">console</span>.log(<span class="pl-s">`Current user: <span class="hljs-subst">${profile.firstName}</span> <span class="hljs-subst">${profile.lastName}</span>`</span>);
 
     <span class="pl-k">return</span> sdk.logout();
-  }).then(<span class="hljs-function"><span class="hljs-params">logoutRes</span> =&gt;</span> {
+  })
+  .then(<span class="hljs-function">(<span class="hljs-params">logoutRes</span>) =&gt;</span> {
     <span class="pl-c1">console</span>.log(<span class="pl-s">&quot;Logged out!&quot;</span>);
 
     <span class="pl-k">return</span> sdk.authInfo();
-  }).then(<span class="hljs-function"><span class="hljs-params">authInfo</span> =&gt;</span> {
-    <span class="pl-c1">console</span>.log(<span class="pl-s">`Logged in: <span class="hljs-subst">${isLoggedIn(authInfo)}</span>`</span>)
+  })
+  .then(<span class="hljs-function">(<span class="hljs-params">authInfo</span>) =&gt;</span> {
+    <span class="pl-c1">console</span>.log(<span class="pl-s">`Logged in: <span class="hljs-subst">${isLoggedIn(authInfo)}</span>`</span>);
     <span class="pl-c">// prints: &quot;Logged in: false&quot;</span>
-  }).catch(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> {
+  })
+  .catch(<span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> {
     <span class="pl-c">// An error occurred</span>
     <span class="pl-c1">console</span>.log(<span class="pl-s">`Request failed with status: <span class="hljs-subst">${res.status}</span> <span class="hljs-subst">${res.statusText}</span>`</span>);
   });
@@ -175,17 +200,16 @@ the SDK&apos;s token store. This can be achieved by logging in or by initializin
 SDK with a token store that holds an access token.</p>
 <p><strong>Example:</strong></p>
 <pre><code class="lang-js"><span class="pl-k">const</span> sdk = sharetribeSdk.createInstance({
-  <span class="hljs-attr">clientId</span>: <span class="pl-s">&apos;a client ID&apos;</span>,
-  <span class="hljs-attr">clientSecret</span>: <span class="pl-s">&apos;a client secret&apos;</span>,
+  <span class="hljs-attr">clientId</span>: <span class="pl-s">&quot;a client ID&quot;</span>,
+  <span class="hljs-attr">clientSecret</span>: <span class="pl-s">&quot;a client secret&quot;</span>,
   <span class="hljs-attr">tokenStore</span>: sharetribeSdk.tokenStore.memoryStore(),
-})
-
-sdk.login({ <span class="hljs-attr">username</span>: <span class="pl-s">&apos;test-user@example.com&apos;</span>, <span class="hljs-attr">password</span>: <span class="pl-s">&apos;test-secret&apos;</span> });
-
-sdk.exchangeToken().then(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> {
-  <span class="pl-c1">console</span>.log(<span class="pl-s">&apos;Trusted token: &apos;</span>, res.data);
 });
 
+sdk.login({ <span class="hljs-attr">username</span>: <span class="pl-s">&quot;test-user@example.com&quot;</span>, <span class="hljs-attr">password</span>: <span class="pl-s">&quot;test-secret&quot;</span> });
+
+sdk.exchangeToken().then(<span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> {
+  <span class="pl-c1">console</span>.log(<span class="pl-s">&quot;Trusted token: &quot;</span>, res.data);
+});
 </code></pre>
 <h2 id="seeing-occasional-401-errors">Seeing occasional 401 errors?</h2>
 <p>Are you seeing occasional 401 errors in the browser&apos;s Web Console?

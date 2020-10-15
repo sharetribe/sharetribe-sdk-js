@@ -109,6 +109,11 @@
                 "id": "logout"
               },
               {
+                "title": "Login with IdP",
+                "depth": 2,
+                "id": "login-with-idp"
+              },
+              {
                 "title": "Determine if user is logged in",
                 "depth": 2,
                 "id": "determine-if-user-is-logged-in"
@@ -389,6 +394,11 @@
           "title": "Logout",
           "depth": 2,
           "id": "logout"
+        },
+        {
+          "title": "Login with IdP",
+          "depth": 2,
+          "id": "login-with-idp"
         },
         {
           "title": "Determine if user is logged in",
